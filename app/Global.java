@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import models.DicaDisciplina;
 import models.Disciplina;
 import models.Tema;
 import models.User;
@@ -24,6 +25,7 @@ public class Global extends GlobalSettings {
 			public void invoke() throws Throwable {
 				if (dao.findAllByClassName(Disciplina.class.getName()).isEmpty()) {
 					criaDisciplinaTemas();
+					criaDicasDisciplinas();
 				}
 
 				if (dao.findAllByClassName(User.class.getName()).isEmpty()) {
@@ -57,15 +59,36 @@ public class Global extends GlobalSettings {
 	 */
 	private void criaDicasDisciplinas(){
 		
+		
 		disciplinas = dao.findAllByClassName("Disciplina");
 		
 		for (int i = 0; i < disciplinas.size(); i++) {
 			
-//			if(disciplinas.get(i).equals("Sistemas de Informação 1")){
-//				disciplinas.get(i).
-//			}
+			if(disciplinas.get(i).equals("Sistemas de Informação 1")){
+				
+				List<Tema> listaTema = dao.findAllByClassName("Tema");
+				Long idDoTema = new Long(0);
+				
+				for (int j = 0; j < listaTema.size(); j++) {
+					if(listaTema.get(j).getName().equals("Análise x Design")){
+						idDoTema = listaTema.get(j).getId();
+					}
+					
+				}
+				
+				Tema tema = dao.findByEntityId(Tema.class, idDoTema);
+				DicaDisciplina dicaDisciplina = new DicaDisciplina("GI", "pq sim");
+				tema.addDica(dicaDisciplina);
+				dicaDisciplina.setTema(tema);
+				dicaDisciplina.setUser("Diogo 0° Melo Barbosa");
+				dao.persist(dicaDisciplina);
+				dao.flush();
+				
+			}
 			
 		}
+		
+		disciplinas.clear();
 		
 	}
 
