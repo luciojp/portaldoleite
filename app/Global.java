@@ -48,6 +48,26 @@ public class Global extends GlobalSettings {
 			}
 		});
 	}
+	
+	/**
+	 * Percorre a lista de disciplinas, quando achar SI1 vai adicionar uma dica
+	 * Sendo que Disciplina só tem implementado o método para adicionar um metaDica
+	 * Tem que fazer a mesma coisa de metaDica na classe Disciplina sendo que para criar uma DicaDisciplina
+	 * Para só ai poder adiocionar a dica 
+	 */
+	private void criaDicasDisciplinas(){
+		
+		disciplinas = dao.findAllByClassName("Disciplina");
+		
+		for (int i = 0; i < disciplinas.size(); i++) {
+			
+//			if(disciplinas.get(i).equals("Sistemas de Informação 1")){
+//				disciplinas.get(i).
+//			}
+			
+		}
+		
+	}
 
 	private void criaUsuarios() {
 		for (int i = 0; i < 10; i++) {
