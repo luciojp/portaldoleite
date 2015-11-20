@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.DicaDisciplina;
+import models.DicaMaterial;
 import models.Disciplina;
 import models.Tema;
 import models.User;
@@ -23,13 +24,13 @@ public class Global extends GlobalSettings {
 		JPA.withTransaction(new play.libs.F.Callback0() {
 			@Override
 			public void invoke() throws Throwable {
+				if (dao.findAllByClassName(User.class.getName()).isEmpty()) {
+					criaUsuarios();
+				}
+
 				if (dao.findAllByClassName(Disciplina.class.getName()).isEmpty()) {
 					criaDisciplinaTemas();
 					criaDicasDisciplinas();
-				}
-
-				if (dao.findAllByClassName(User.class.getName()).isEmpty()) {
-					criaUsuarios();
 				}
 			}
 		});
@@ -50,46 +51,70 @@ public class Global extends GlobalSettings {
 			}
 		});
 	}
-	
+
 	/**
 	 * Percorre a lista de disciplinas, quando achar SI1 vai adicionar uma dica
-	 * Sendo que Disciplina só tem implementado o método para adicionar um metaDica
-	 * Tem que fazer a mesma coisa de metaDica na classe Disciplina sendo que para criar uma DicaDisciplina
-	 * Para só ai poder adiocionar a dica 
+	 * Sendo que Disciplina só tem implementado o método para adicionar um
+	 * metaDica Tem que fazer a mesma coisa de metaDica na classe Disciplina
+	 * sendo que para criar uma DicaDisciplina Para só ai poder adiocionar a
+	 * dica
 	 */
-	private void criaDicasDisciplinas(){
-		
-		
+	private void criaDicasDisciplinas() {
 		disciplinas = dao.findAllByClassName("Disciplina");
-		
+
 		for (int i = 0; i < disciplinas.size(); i++) {
-			
-			if(disciplinas.get(i).equals("Sistemas de Informação 1")){
-				
-				List<Tema> listaTema = dao.findAllByClassName("Tema");
-				Long idDoTema = new Long(0);
-				
-				for (int j = 0; j < listaTema.size(); j++) {
-					if(listaTema.get(j).getName().equals("Análise x Design")){
-						idDoTema = listaTema.get(j).getId();
-					}
-					
-				}
-				
-				Tema tema = dao.findByEntityId(Tema.class, idDoTema);
+
+			if (disciplinas.get(i).getNome().equals("Sistemas de Informação 1")) {
+
+				Tema tema = disciplinas.get(i).getTemaByNome("Análise x Design");
+
 				DicaDisciplina dicaDisciplina = new DicaDisciplina("GI", "pq sim");
 				tema.addDica(dicaDisciplina);
 				dicaDisciplina.setTema(tema);
 				dicaDisciplina.setUser("Diogo 0° Melo Barbosa");
+
+				DicaMaterial dicaMaterial = new DicaMaterial("http://www.wthreex.com/rup/process/workflow/ovu_and.htm");
+
+				tema.addDica(dicaMaterial);
+				dicaMaterial.setTema(tema);
+				dicaMaterial.setUser("Diogo 1° Melo Barbosa");
+
+				dao.persist(dicaMaterial);
 				dao.persist(dicaDisciplina);
 				dao.flush();
-				
+
+			} else if (disciplinas.get(i).getNome().equals("Cálculo 2")) {
+				Tema tema = disciplinas.get(i).getTemaByNome("Integral imprópria");
+
+				DicaDisciplina dicaDisciplina = new DicaDisciplina("Cálculo 1", "pq ta no fluxograma !!");
+				tema.addDica(dicaDisciplina);
+				dicaDisciplina.setTema(tema);
+				dicaDisciplina.setUser("Diogo 2° Melo Barbosa");
+
+				DicaMaterial dicaMaterial = new DicaMaterial("https://www.youtube.com/watch?v=TD8L1V6xckw");
+
+				tema.addDica(dicaMaterial);
+				dicaMaterial.setTema(tema);
+				dicaMaterial.setUser("Diogo 1° Melo Barbosa");
+
+				dao.persist(dicaMaterial);
+				dao.persist(dicaDisciplina);
+				dao.flush();
+			} else if (disciplinas.get(i).getNome().equals("Estrutura de Dados e Algoritmos")) {
+				Tema tema = disciplinas.get(i).getTemaByNome("Estrutura de dados");
+
+				DicaMaterial dicaMaterial = new DicaMaterial("https://pt.wikipedia.org/wiki/%C3%81rvore_AVL");
+
+				tema.addDica(dicaMaterial);
+				dicaMaterial.setTema(tema);
+				dicaMaterial.setUser("Diogo 5° Melo Barbosa");
+
+				dao.persist(dicaMaterial);
+				dao.flush();
 			}
-			
+
 		}
-		
-		disciplinas.clear();
-		
+
 	}
 
 	private void criaUsuarios() {
