@@ -29,6 +29,9 @@ public class Disciplina {
 	@OneToMany(mappedBy="disciplina", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private List<MetaDica> metaDicas;
 	
+	@OneToMany(mappedBy="disciplina", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	private List<DicaDisciplina> dicasDisciplinas;
+	
 	public Disciplina() {
 	}
 	
@@ -74,10 +77,19 @@ public class Disciplina {
 		}
 		return null;
 	}
+	
+	public List<DicaDisciplina> getDicaDisciplina(){
+		Collections.sort(dicasDisciplinas);
+		return this.dicasDisciplinas;
+	}
 
 	public List<MetaDica> getMetaDicas() {
 		Collections.sort(metaDicas);
 		return this.metaDicas;
+	}
+	
+	public void addDicaDisciplina(DicaDisciplina dicaDisciplina){
+		this.dicasDisciplinas.add(dicaDisciplina);
 	}
 
 	public void addMetaDica(MetaDica metaDica) {
