@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Dica;
 import models.DicaDisciplina;
 import models.DicaMaterial;
 import models.Disciplina;
@@ -31,6 +32,7 @@ public class Global extends GlobalSettings {
 				if (dao.findAllByClassName(Disciplina.class.getName()).isEmpty()) {
 					criaDisciplinaTemas();
 					criaDicasDisciplinas();
+//					computaVotos();
 				}
 			}
 		});
@@ -52,13 +54,28 @@ public class Global extends GlobalSettings {
 		});
 	}
 
-	/**
-	 * Percorre a lista de disciplinas, quando achar SI1 vai adicionar uma dica
-	 * Sendo que Disciplina só tem implementado o método para adicionar um
-	 * metaDica Tem que fazer a mesma coisa de metaDica na classe Disciplina
-	 * sendo que para criar uma DicaDisciplina Para só ai poder adiocionar a
-	 * dica
-	 */
+	
+	private void computaVotos(){
+		
+		List<Dica> dica = new ArrayList<>();
+		dica = dao.findAllByClassName("DicaDisciplina");
+		
+		for (int i = 0; i < dica.size(); i++) {
+			
+			String login = dica.get(i).getUser();
+			
+			Dica dica2 = dao.findByEntityId(Dica.class, dica.get(i).getId());
+			
+			if(!dica2.wasVotedByUser(login)){
+				dica2.addUsuarioQueVotou(login);
+				dica2.incrementaConcordancias();
+				dao.merge(dica2);
+				dao.flush();
+			}
+			
+		}
+	}
+	
 	private void criaDicasDisciplinas() {
 		disciplinas = dao.findAllByClassName("Disciplina");
 
@@ -72,7 +89,7 @@ public class Global extends GlobalSettings {
 				tema.addDica(dicaDisciplina);
 				dicaDisciplina.setTema(tema);
 				dicaDisciplina.setUser("Diogo 0° Melo Barbosa");
-
+			
 				DicaMaterial dicaMaterial = new DicaMaterial("http://www.wthreex.com/rup/process/workflow/ovu_and.htm");
 
 				tema.addDica(dicaMaterial);
@@ -82,6 +99,23 @@ public class Global extends GlobalSettings {
 				dao.persist(dicaMaterial);
 				dao.persist(dicaDisciplina);
 				dao.flush();
+				
+				
+				/**
+				 * Assim como em application, realizei os mesmo passos para cadastrar o voto
+				 * Já aproveitei que todas as informações que precisam para criar a dita já tem aqui em criar a dica da disciplina. 
+				 * (nada melhor do que criar a dica já com o voto regristrado né?!)
+				 * Pois bem, tá dando nullPointerException assim que executa a linha 114.
+				 * Já mexi, revirei, procurei e não achei o motivo, deve ser a hora/sono (04h da matina agora).
+				 * Assim que der tenta ver isso ai. Vlw Wendeley =D
+				 */
+				
+//				Dica dica = dao.findByEntityId(Dica.class, dicaMaterial.getId());
+//				dica.addUsuarioQueVotou("Diogo 0° Melo Barbosa");
+//				dica.incrementaConcordancias();
+				
+//				dao.merge(dica);
+//				dao.flush();
 
 			} else if (disciplinas.get(i).getNome().equals("Cálculo 2")) {
 				Tema tema = disciplinas.get(i).getTemaByNome("Integral imprópria");
