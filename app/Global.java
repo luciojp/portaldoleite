@@ -32,7 +32,7 @@ public class Global extends GlobalSettings {
 				if (dao.findAllByClassName(Disciplina.class.getName()).isEmpty()) {
 					criaDisciplinaTemas();
 					criaDicasDisciplinas();
-//					computaVotos();
+					//computaVotos();
 				}
 			}
 		});
@@ -54,28 +54,27 @@ public class Global extends GlobalSettings {
 		});
 	}
 
-	
-	private void computaVotos(){
-		
-		List<Dica> dica = new ArrayList<>();
-		dica = dao.findAllByClassName("DicaDisciplina");
-		
-		for (int i = 0; i < dica.size(); i++) {
+	private void computaVotos() {
+
+		List<Dica> listDica = new ArrayList<>();
+		listDica = dao.findAllByClassName("Dica");
+
+		for (int i = 0; i < listDica.size(); i++) {
+
+			String login = listDica.get(i).getUser();
+
+			Dica dica = dao.findByEntityId(Dica.class,  listDica.get(i).getId());
 			
-			String login = dica.get(i).getUser();
-			
-			Dica dica2 = dao.findByEntityId(Dica.class, dica.get(i).getId());
-			
-			if(!dica2.wasVotedByUser(login)){
-				dica2.addUsuarioQueVotou(login);
-				dica2.incrementaConcordancias();
-				dao.merge(dica2);
+			if (!dica.wasVotedByUser(login)) {
+				dica.addUsuarioQueVotou(login);
+				dica.incrementaConcordancias();
+				dao.merge(dica);
 				dao.flush();
 			}
-			
+
 		}
 	}
-	
+
 	private void criaDicasDisciplinas() {
 		disciplinas = dao.findAllByClassName("Disciplina");
 
@@ -89,7 +88,7 @@ public class Global extends GlobalSettings {
 				tema.addDica(dicaDisciplina);
 				dicaDisciplina.setTema(tema);
 				dicaDisciplina.setUser("Diogo 0° Melo Barbosa");
-			
+
 				DicaMaterial dicaMaterial = new DicaMaterial("http://www.wthreex.com/rup/process/workflow/ovu_and.htm");
 
 				tema.addDica(dicaMaterial);
@@ -99,23 +98,39 @@ public class Global extends GlobalSettings {
 				dao.persist(dicaMaterial);
 				dao.persist(dicaDisciplina);
 				dao.flush();
+
+				dicaDisciplina.addUsuarioQueVotou("operep0");
+				dicaDisciplina.incrementaConcordancias();
+				dicaDisciplina.addUsuarioQueVotou("operep1");
+				dicaDisciplina.incrementaConcordancias();
 				
+				dicaMaterial.addUsuarioQueVotou("operep0");
+				dicaMaterial.incrementaConcordancias();
+				dicaMaterial.addUsuarioQueVotou("operep1");
+				dicaMaterial.incrementaConcordancias();
+				
+				dao.merge(dicaDisciplina);
+				dao.merge(dicaMaterial);
+				dao.flush();
 				
 				/**
-				 * Assim como em application, realizei os mesmo passos para cadastrar o voto
-				 * Já aproveitei que todas as informações que precisam para criar a dita já tem aqui em criar a dica da disciplina. 
-				 * (nada melhor do que criar a dica já com o voto regristrado né?!)
-				 * Pois bem, tá dando nullPointerException assim que executa a linha 114.
-				 * Já mexi, revirei, procurei e não achei o motivo, deve ser a hora/sono (04h da matina agora).
-				 * Assim que der tenta ver isso ai. Vlw Wendeley =D
+				 * Assim como em application, realizei os mesmo passos para
+				 * cadastrar o voto Já aproveitei que todas as informações que
+				 * precisam para criar a dita já tem aqui em criar a dica da
+				 * disciplina. (nada melhor do que criar a dica já com o voto
+				 * regristrado né?!) Pois bem, tá dando nullPointerException
+				 * assim que executa a linha 114. Já mexi, revirei, procurei e
+				 * não achei o motivo, deve ser a hora/sono (04h da matina
+				 * agora). Assim que der tenta ver isso ai. Vlw Wendeley =D
 				 */
-				
-//				Dica dica = dao.findByEntityId(Dica.class, dicaMaterial.getId());
-//				dica.addUsuarioQueVotou("Diogo 0° Melo Barbosa");
-//				dica.incrementaConcordancias();
-				
-//				dao.merge(dica);
-//				dao.flush();
+
+				// Dica dica = dao.findByEntityId(Dica.class,
+				// dicaMaterial.getId());
+				// dica.addUsuarioQueVotou("Diogo 0° Melo Barbosa");
+				// dica.incrementaConcordancias();
+
+				// dao.merge(dica);
+				// dao.flush();
 
 			} else if (disciplinas.get(i).getNome().equals("Cálculo 2")) {
 				Tema tema = disciplinas.get(i).getTemaByNome("Integral imprópria");
@@ -134,6 +149,21 @@ public class Global extends GlobalSettings {
 				dao.persist(dicaMaterial);
 				dao.persist(dicaDisciplina);
 				dao.flush();
+				
+				dicaDisciplina.addUsuarioQueVotou("operep2");
+				dicaDisciplina.incrementaConcordancias();
+				dicaDisciplina.addUsuarioQueVotou("operep1");
+				dicaDisciplina.incrementaConcordancias();
+				
+				dicaMaterial.addUsuarioQueVotou("operep2");
+				dicaMaterial.incrementaConcordancias();
+				dicaMaterial.addUsuarioQueVotou("operep1");
+				dicaMaterial.incrementaConcordancias();
+				
+				dao.merge(dicaDisciplina);
+				dao.merge(dicaMaterial);
+				dao.flush();
+				
 			} else if (disciplinas.get(i).getNome().equals("Estrutura de Dados e Algoritmos")) {
 				Tema tema = disciplinas.get(i).getTemaByNome("Estrutura de dados");
 
@@ -144,6 +174,15 @@ public class Global extends GlobalSettings {
 				dicaMaterial.setUser("Diogo 5° Melo Barbosa");
 
 				dao.persist(dicaMaterial);
+				dao.flush();
+				
+				
+				dicaMaterial.addUsuarioQueVotou("operep5");
+				dicaMaterial.incrementaConcordancias();
+				dicaMaterial.addUsuarioQueVotou("operep1");
+				dicaMaterial.incrementaConcordancias();
+					
+				dao.merge(dicaMaterial);
 				dao.flush();
 			}
 
