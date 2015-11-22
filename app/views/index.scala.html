@@ -59,26 +59,27 @@
                <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                   @if(dica.getTipo().equals("DicaDisciplina")){
                   <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Disciplinas importantes</a></div>
-                  <p class="normal-font">@dica.getTexto()</p>
                   }
                   @if(dica.getTipo().equals("DicaMaterial")){
                   	 <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Link para material útil</a></div>
-                  <a href="@dica.getTexto()">@dica.getTexto()</a>
                   }
                   @if(dica.getTipo().equals("DicaConselho")){
                     <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Conselho</a></div>
-                  <p class="normal-font">@dica.getTexto()</p>
                   }
                   @if(dica.getTipo().equals("DicaAssunto")){
                     <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Assuntos importantes</a></div>
-                  <p>Assuntos importantes:</p>
-                  <p class="normal-font">@dica.getTexto()</p>
                   }
                   <dl class="uk-description-list-line">
-                     <dt><span class="uk-text-primary">Dica</span></dt>
-                     <dd><span class="uk-text-large">Add this class to increase the font size.</span></dd>
-                     <dt><span class="uk-text-primary">Disciplina</span></dt>
-                     <dd><span class="uk-text-large">EDA</span></dd>
+                     <dt><span class="uk-text-primary">Dica :</span></dt>
+                     <dd>
+                     @if(dica.getTipo().equals("DicaMaterial")){
+                     	<span class="uk-text-large"><a href="@dica.getTexto()">@dica.getTexto()</a></span>
+                     }else{
+                     <span class="uk-text-large">@dica.getTexto()</span>
+                     }
+                     </dd>
+                     <dt><span class="uk-text-primary">Disciplina : </span></dt>
+                     <dd><span class="uk-text-large">@dica.getInstanciaDisciplina()</span></dd>
                   </dl>
                </div>
                }
