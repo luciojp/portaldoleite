@@ -29,7 +29,8 @@ public class Application extends Controller {
 	@Security.Authenticated(Secured.class)
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
-        return ok(views.html.index.render(disciplinas));
+		List<Dica> dicas = dao.findAllByClassName(Dica.class.getName());
+        return ok(views.html.index.render(disciplinas, dicas));
     }
 	
 	@Transactional
