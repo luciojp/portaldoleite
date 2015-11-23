@@ -34,7 +34,7 @@ public class Application extends Controller {
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		
-		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica d ORDER BY d.id DESC");
+		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.id DESC");
 		consultaUltimasDezDicas.setMaxResults(10);
 		
         return ok(views.html.index.render(disciplinas, consultaUltimasDezDicas.getResultList()));
