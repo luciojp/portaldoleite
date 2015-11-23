@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import models.Dica;
 import models.DicaDisciplina;
 import models.DicaMaterial;
@@ -54,6 +56,7 @@ public class Global extends GlobalSettings {
 	}
 
 	private void criaDicasDisciplinas() {
+		
 		disciplinas = dao.findAllByClassName("Disciplina");
 
 		for (int i = 0; i < disciplinas.size(); i++) {
@@ -160,32 +163,32 @@ public class Global extends GlobalSettings {
 
 	private void criaDisciplinaTemas() {
 		Disciplina si1 = new Disciplina("Sistemas de Informação 1");
-		si1.addTema(new Tema("Análise x Design"));
-		si1.addTema(new Tema("Orientação a objetos"));
-		si1.addTema(new Tema("GRASP"));
-		si1.addTema(new Tema("GoF"));
-		si1.addTema(new Tema("Arquitetura"));
-		si1.addTema(new Tema("Play"));
-		si1.addTema(new Tema("JavaScript"));
-		si1.addTema(new Tema("HTML / CSS / Bootstrap"));
-		si1.addTema(new Tema("Heroku"));
-		si1.addTema(new Tema("Labs"));
-		si1.addTema(new Tema("Minitestes"));
-		si1.addTema(new Tema("Projeto"));
+		si1.addTema(new Tema("Análise x Design", si1));
+		si1.addTema(new Tema("Orientação a objetos", si1));
+		si1.addTema(new Tema("GRASP", si1));
+		si1.addTema(new Tema("GoF", si1));
+		si1.addTema(new Tema("Arquitetura", si1));
+		si1.addTema(new Tema("Play", si1));
+		si1.addTema(new Tema("JavaScript", si1));
+		si1.addTema(new Tema("HTML / CSS / Bootstrap", si1));
+		si1.addTema(new Tema("Heroku", si1));
+		si1.addTema(new Tema("Labs", si1));
+		si1.addTema(new Tema("Minitestes", si1));
+		si1.addTema(new Tema("Projeto", si1));
 
 		Disciplina calculo = new Disciplina("Cálculo 2");
-		calculo.addTema(new Tema("Integral imprópria"));
-		calculo.addTema(new Tema("Aplicações de integrais"));
-		calculo.addTema(new Tema("Sequências"));
-		calculo.addTema(new Tema("Séries numéricas"));
-		calculo.addTema(new Tema("Intervalor e raio de convergência"));
-		calculo.addTema(new Tema("Séries de potências"));
-		calculo.addTema(new Tema("Funções de vetoriais"));
+		calculo.addTema(new Tema("Integral imprópria", si1));
+		calculo.addTema(new Tema("Aplicações de integrais", si1));
+		calculo.addTema(new Tema("Sequências", si1));
+		calculo.addTema(new Tema("Séries numéricas", si1));
+		calculo.addTema(new Tema("Intervalor e raio de convergência", si1));
+		calculo.addTema(new Tema("Séries de potências", si1));
+		calculo.addTema(new Tema("Funções de vetoriais", si1));
 
 		Disciplina eda = new Disciplina("Estrutura de Dados e Algoritmos");
-		eda.addTema(new Tema("Custo de algoritmos"));
-		eda.addTema(new Tema("Algoritmos de ordenação"));
-		eda.addTema(new Tema("Estrutura de dados"));
+		eda.addTema(new Tema("Custo de algoritmos", si1));
+		eda.addTema(new Tema("Algoritmos de ordenação", si1));
+		eda.addTema(new Tema("Estrutura de dados", si1));
 
 		dao.persist(si1);
 		dao.persist(calculo);

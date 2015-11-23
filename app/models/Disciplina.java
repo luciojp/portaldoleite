@@ -64,6 +64,7 @@ public class Disciplina {
 	
 	public void addTema(Tema tema){
 		this.temas.add(tema);
+		
 	}
 	
 	public Tema getTemaByNome(String nome){
