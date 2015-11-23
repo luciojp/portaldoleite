@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Query;
+
 import models.Dica;
 import models.DicaAssunto;
 import models.DicaConselho;
@@ -26,26 +28,16 @@ public class Application extends Controller {
 	private static final int MAX_DENUNCIAS = 3;
 	private static GenericDAOImpl dao = new GenericDAOImpl();
 	
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Security.Authenticated(Secured.class)
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
-		List<Dica> dicas = dao.findAllByClassName(Dica.class.getName());
 		
-		List<Dica> ultimasDezDicas = new ArrayList<Dica>();
+		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica d ORDER BY d.id DESC");
+		consultaUltimasDezDicas.setMaxResults(10);
 		
-		if(dicas.size() > 10){
-			for (int i = dicas.size()-1 ; i >= dicas.size()-10; i--) {
-				ultimasDezDicas.add(dicas.get(i));
-			}
-		}else{
-			
-			for (int i = dicas.size()-1; i >= 0; i--) {
-				ultimasDezDicas.add(dicas.get(i));
-			}
-		}
-		
-        return ok(views.html.index.render(disciplinas, ultimasDezDicas));
+        return ok(views.html.index.render(disciplinas, consultaUltimasDezDicas.getResultList()));
     }
 
 	
