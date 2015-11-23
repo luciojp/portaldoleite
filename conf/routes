@@ -18,6 +18,7 @@ POST    /registrar                       controllers.Register.register()
 GET		/tema/:id						 controllers.Application.tema(id: Long)
 GET		/disciplina/:id					 controllers.Application.disciplina(id: Long)
 GET		/metadica/:id					 controllers.Application.metadica(id: Long)
+GET /detalhes/:id                        controllers.Application.detalhesDica(id: Long)
 
 POST    /cadastrarDica/:id		         controllers.Application.cadastrarDica(id: Long)
 POST 	/avaliar/:id					 controllers.Application.avaliarDificuldadeTema(id: Long)

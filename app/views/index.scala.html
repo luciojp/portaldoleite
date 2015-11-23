@@ -58,16 +58,16 @@
                @for(dica <- dicas){
                <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                   @if(dica.getTipo().equals("DicaDisciplina")){
-                  <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Disciplinas importantes</a></div>
+                  <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Disciplinas importantes</a></div>
                   }
                   @if(dica.getTipo().equals("DicaMaterial")){
-                  	 <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Link para material útil</a></div>
+                  	 <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Link para material útil</a></div>
                   }
                   @if(dica.getTipo().equals("DicaConselho")){
-                    <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Conselho</a></div>
+                    <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Conselho</a></div>
                   }
                   @if(dica.getTipo().equals("DicaAssunto")){
-                    <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="#">Assuntos importantes</a></div>
+                    <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Assuntos importantes</a></div>
                   }
                   <dl class="uk-description-list-line">
                      <dt><span class="uk-text-primary">Dica :</span></dt>
@@ -83,6 +83,7 @@
                   </dl>
                </div>
                }
+               <br />
             </div>
          </div>
       </div>

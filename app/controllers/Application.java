@@ -402,4 +402,13 @@ public class Application extends Controller {
 		
 		return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
 	}
+	
+	@Transactional
+	@Security.Authenticated(Secured.class)
+	public static Result detalhesDica(Long idDica){
+		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
+		Dica dica = dao.findByEntityId(Dica.class, idDica);
+		
+		return ok(views.html.detalhes.render(listaDisciplina, dica, dica.getTema()));
+	}
 }
