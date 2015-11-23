@@ -177,18 +177,18 @@ public class Global extends GlobalSettings {
 		si1.addTema(new Tema("Projeto", si1));
 
 		Disciplina calculo = new Disciplina("Cálculo 2");
-		calculo.addTema(new Tema("Integral imprópria", si1));
-		calculo.addTema(new Tema("Aplicações de integrais", si1));
-		calculo.addTema(new Tema("Sequências", si1));
-		calculo.addTema(new Tema("Séries numéricas", si1));
-		calculo.addTema(new Tema("Intervalor e raio de convergência", si1));
-		calculo.addTema(new Tema("Séries de potências", si1));
-		calculo.addTema(new Tema("Funções de vetoriais", si1));
+		calculo.addTema(new Tema("Integral imprópria", calculo));
+		calculo.addTema(new Tema("Aplicações de integrais", calculo));
+		calculo.addTema(new Tema("Sequências", calculo));
+		calculo.addTema(new Tema("Séries numéricas", calculo));
+		calculo.addTema(new Tema("Intervalor e raio de convergência", calculo));
+		calculo.addTema(new Tema("Séries de potências", calculo));
+		calculo.addTema(new Tema("Funções de vetoriais", calculo));
 
 		Disciplina eda = new Disciplina("Estrutura de Dados e Algoritmos");
-		eda.addTema(new Tema("Custo de algoritmos", si1));
-		eda.addTema(new Tema("Algoritmos de ordenação", si1));
-		eda.addTema(new Tema("Estrutura de dados", si1));
+		eda.addTema(new Tema("Custo de algoritmos", eda));
+		eda.addTema(new Tema("Algoritmos de ordenação", eda));
+		eda.addTema(new Tema("Estrutura de dados", eda));
 
 		dao.persist(si1);
 		dao.persist(calculo);
