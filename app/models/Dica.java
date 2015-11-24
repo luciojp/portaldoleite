@@ -61,6 +61,7 @@ public abstract class Dica implements Comparable<Dica>{
 	
 	public Dica(){
 		this.usuariosQueJaVotaram = new ArrayList<String>();
+		this.checaTipoDica();									
 	}
 
 	public Tema getTema() {
