@@ -21,7 +21,7 @@ public class MetaDicaTest {
 	@Before
 	public void before() {
 		disciplina = new Disciplina("Estruturas de Dados e Algoritmos");
-		tema = new Tema("Árvore balanceada");
+		tema = new Tema("Árvore balanceada", disciplina);
 		
 		dica1 = new DicaAssunto("Taoísmo");
 		user = new User("l@o.tse", "yinyang", "loltsez");

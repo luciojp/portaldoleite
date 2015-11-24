@@ -16,7 +16,7 @@ public class DisciplinaTest {
 	@Test
 	public void deveConseguirAdicionarTemas() {
 		Disciplina disciplina = new Disciplina("Algoritmos Avançados");
-		Tema tema = new Tema("Programação Dinâmica");
+		Tema tema = new Tema("Programação Dinâmica", disciplina);
 		
 		assertThat(disciplina.getTemas().size()).isEqualTo(0);
 		

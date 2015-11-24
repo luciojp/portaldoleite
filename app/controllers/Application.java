@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import models.Disciplina;
 import models.MetaDica;
 import models.Tema;
 import models.dao.GenericDAOImpl;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -34,7 +32,9 @@ public class Application extends Controller {
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		
-		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.id DESC");
+		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.id DESC"); // Query para as últimas dicas
+//		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY CONCORDANCIAS"); // Query para as com mais votos positivos
+//		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY DISCORDANCIAS"); // Query para as com mais votos negativos
 		consultaUltimasDezDicas.setMaxResults(10);
 		
         return ok(views.html.index.render(disciplinas, consultaUltimasDezDicas.getResultList()));

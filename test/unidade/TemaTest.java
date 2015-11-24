@@ -20,7 +20,7 @@ public class TemaTest {
 	@Before
 	public void before() {
 		disciplina = new Disciplina("Literatura Clássica I");
-		tema = new Tema("Shakespeare");
+		tema = new Tema("Shakespeare", disciplina);
 		
 		user1 = new User("walt_the_man@whitman.com", "poetryisbeautiful", "walty");
 		dica1 = new DicaConselho("Comece por Hamlet");

@@ -22,7 +22,7 @@ public class DicaTest {
 	@Before
 	public void before() {
 		disciplina = new Disciplina("Álgebra Linear");
-		tema = new Tema("Transformações lineares");
+		tema = new Tema("Transformações lineares", disciplina);
 		
 		dica1 = new DicaAssunto("LaPlace");
 		dica2 = new DicaConselho("Não subestime a última prova");
