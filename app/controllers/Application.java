@@ -39,9 +39,9 @@ public class Application extends Controller {
 		if (requestFiltro.get("filtro") == null || requestFiltro.get("filtro").equals("maisRecentes")) {
 			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.id DESC"); // Query para as últimas dicas
 		}else if (requestFiltro.get("filtro").equals("maisDiscordancias")) {
-			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.discordancias"); // Query para as com mais votos negativos
+			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.discordancias DESC"); // Query para as com mais votos negativos
 		}else{
-			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.concordancias"); // Query para as com mais votos positivos
+			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.concordancias DESC"); // Query para as com mais votos positivos
 		}
 		
 		consultaUltimasDezDicas.setMaxResults(10);
