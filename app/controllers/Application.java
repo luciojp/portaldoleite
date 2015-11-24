@@ -30,11 +30,20 @@ public class Application extends Controller {
 	@Transactional
 	@Security.Authenticated(Secured.class)
     public static Result index() {
+		DynamicForm requestFiltro = Form.form().bindFromRequest();
+		
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		
-		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.id DESC"); // Query para as últimas dicas
-//		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY CONCORDANCIAS"); // Query para as com mais votos positivos
-//		Query consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY DISCORDANCIAS"); // Query para as com mais votos negativos
+		Query consultaUltimasDezDicas = null;
+		
+		if (requestFiltro.get("filtro") == null || requestFiltro.get("filtro").equals("maisRecentes")) {
+			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.id DESC"); // Query para as últimas dicas
+		}else if (requestFiltro.get("filtro").equals("maisDiscordancias")) {
+			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.discordancias"); // Query para as com mais votos negativos
+		}else{
+			consultaUltimasDezDicas = dao.createQuery("FROM Dica dica ORDER BY dica.concordancias"); // Query para as com mais votos positivos
+		}
+		
 		consultaUltimasDezDicas.setMaxResults(10);
 		
         return ok(views.html.index.render(disciplinas, consultaUltimasDezDicas.getResultList()));

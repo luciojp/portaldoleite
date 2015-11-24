@@ -55,28 +55,39 @@
                   </div>
                   <p>Escolha uma disciplina ou tema ao lado para acessar os leites.</p>
                </div>
+               <div class="uk-panel uk-panel-box">
+                  <div class="uk-article">
+                     <form method="GET" action="@routes.Application.index()" class="uk-form">
+                        <legend>Filtros:</legend>
+                        <input type="radio" name="filtro" value="maisRecentes"> Dicas mais recentes
+                        <input type="radio" name="filtro" value="maisVotosPositivos"> Dicas com mais votos Positivos
+                        <input type="radio" name="filtro" value="maisDiscordancias"> Dicas com mais discordancias
+                        <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-filter"></i> Filtrar </button>
+                     </form>
+                  </div>
+               </div>
                @for(dica <- dicas){
                <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                   @if(dica.getTipo().equals("DicaDisciplina")){
                   <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Disciplinas importantes</a></div>
                   }
                   @if(dica.getTipo().equals("DicaMaterial")){
-                  	 <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Link para material útil</a></div>
+                  <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Link para material útil</a></div>
                   }
                   @if(dica.getTipo().equals("DicaConselho")){
-                    <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Conselho</a></div>
+                  <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Conselho</a></div>
                   }
                   @if(dica.getTipo().equals("DicaAssunto")){
-                    <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Assuntos importantes</a></div>
+                  <div class="uk-panel uk-panel-box" data-uk-sticky="{boundary:true}"><a href="/detalhes/@dica.getId()">Assuntos importantes</a></div>
                   }
                   <dl class="uk-description-list-line">
                      <dt><span class="uk-text-primary">Dica :</span></dt>
                      <dd>
-                     @if(dica.getTipo().equals("DicaMaterial")){
-                     	<span class="uk-text-large"><a href="@dica.getTexto()">@dica.getTexto()</a></span>
-                     }else{
-                     <span class="uk-text-large">@dica.getTexto()</span>
-                     }
+                        @if(dica.getTipo().equals("DicaMaterial")){
+                        <span class="uk-text-large"><a href="@dica.getTexto()">@dica.getTexto()</a></span>
+                        }else{
+                        <span class="uk-text-large">@dica.getTexto()</span>
+                        }
                      </dd>
                      <dt><span class="uk-text-primary">Disciplina : </span></dt>
                      <dd><span class="uk-text-large">@dica.getTema().getDisciplina().getNome()</span></dd>
