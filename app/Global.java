@@ -55,80 +55,65 @@ public class Global extends GlobalSettings {
 		});
 	}
 
+
+	private void carregaInformacoesDisciplinas(Tema tema, DicaDisciplina dicaDisciplina, DicaMaterial dicaMaterial){
+		tema.addDica(dicaDisciplina);
+		dicaDisciplina.setTema(tema);
+		dicaDisciplina.setUser("Diogo 0° Melo Barbosa");
+		tema.addDica(dicaMaterial);
+		dicaMaterial.setTema(tema);
+		dicaMaterial.setUser("Diogo 1° Melo Barbosa");
+
+		dao.persist(dicaMaterial);
+		dao.persist(dicaDisciplina);
+		dao.flush();
+
+		dicaDisciplina.addUsuarioQueVotou("operep0");
+		dicaDisciplina.incrementaConcordancias();
+		dicaDisciplina.addUsuarioQueVotou("operep1");
+		dicaDisciplina.incrementaConcordancias();
+
+		dicaMaterial.addUsuarioQueVotou("operep0");
+		dicaMaterial.incrementaConcordancias();
+		dicaMaterial.addUsuarioQueVotou("operep1");
+		dicaMaterial.incrementaConcordancias();
+
+		dao.merge(dicaDisciplina);
+		dao.merge(dicaMaterial);
+		dao.flush();
+	}
+
 	private void criaDicasDisciplinas() {
 		
 		disciplinas = dao.findAllByClassName("Disciplina");
 
 		for (int i = 0; i < disciplinas.size(); i++) {
 
-			if (disciplinas.get(i).getNome().equals("Sistemas de Informação 1")) {
+			String nome_disciplina = disciplinas.get(i).getNome();
+
+			if (nome_disciplina.equals("Sistemas de Informação 1")) {
 
 				Tema tema = disciplinas.get(i).getTemaByNome("Análise x Design");
-
 				DicaDisciplina dicaDisciplina = new DicaDisciplina("GI", "pq sim");
-				tema.addDica(dicaDisciplina);
-				dicaDisciplina.setTema(tema);
-				dicaDisciplina.setUser("Diogo 0° Melo Barbosa");
 
 				DicaMaterial dicaMaterial = new DicaMaterial("http://www.wthreex.com/rup/process/workflow/ovu_and.htm");
 
-				tema.addDica(dicaMaterial);
-				dicaMaterial.setTema(tema);
-				dicaMaterial.setUser("Diogo 1° Melo Barbosa");
+				carregaInformacoesDisciplinas(tema,dicaDisciplina,dicaMaterial);
 
-				dao.persist(dicaMaterial);
-				dao.persist(dicaDisciplina);
-				dao.flush();
 
-				dicaDisciplina.addUsuarioQueVotou("operep0");
-				dicaDisciplina.incrementaConcordancias();
-				dicaDisciplina.addUsuarioQueVotou("operep1");
-				dicaDisciplina.incrementaConcordancias();
 
-				dicaMaterial.addUsuarioQueVotou("operep0");
-				dicaMaterial.incrementaConcordancias();
-				dicaMaterial.addUsuarioQueVotou("operep1");
-				dicaMaterial.incrementaConcordancias();
+			} else if (nome_disciplina.equals("Cálculo 2")) {
 
-				dao.merge(dicaDisciplina);
-				dao.merge(dicaMaterial);
-				dao.flush();
-
-			} else if (disciplinas.get(i).getNome().equals("Cálculo 2")) {
 				Tema tema = disciplinas.get(i).getTemaByNome("Integral imprópria");
-
 				DicaDisciplina dicaDisciplina = new DicaDisciplina("Cálculo 1", "pq ta no fluxograma !!");
-				tema.addDica(dicaDisciplina);
-				dicaDisciplina.setTema(tema);
-				dicaDisciplina.setUser("Diogo 2° Melo Barbosa");
+
 
 				DicaMaterial dicaMaterial = new DicaMaterial("https://www.youtube.com/watch?v=TD8L1V6xckw");
+				carregaInformacoesDisciplinas(tema,dicaDisciplina,dicaMaterial);
 
-				tema.addDica(dicaMaterial);
-				dicaMaterial.setTema(tema);
-				dicaMaterial.setUser("Diogo 1° Melo Barbosa");
+			} else if (nome_disciplina.equals("Estrutura de Dados e Algoritmos")) {
 
-				dao.persist(dicaMaterial);
-				dao.persist(dicaDisciplina);
-				dao.flush();
-
-				dicaDisciplina.addUsuarioQueVotou("operep2");
-				dicaDisciplina.incrementaConcordancias();
-				dicaDisciplina.addUsuarioQueVotou("operep1");
-				dicaDisciplina.incrementaConcordancias();
-
-				dicaMaterial.addUsuarioQueVotou("operep2");
-				dicaMaterial.incrementaConcordancias();
-				dicaMaterial.addUsuarioQueVotou("operep1");
-				dicaMaterial.incrementaConcordancias();
-
-				dao.merge(dicaDisciplina);
-				dao.merge(dicaMaterial);
-				dao.flush();
-
-			} else if (disciplinas.get(i).getNome().equals("Estrutura de Dados e Algoritmos")) {
 				Tema tema = disciplinas.get(i).getTemaByNome("Estrutura de dados");
-
 				DicaMaterial dicaMaterial = new DicaMaterial("https://pt.wikipedia.org/wiki/%C3%81rvore_AVL");
 
 				tema.addDica(dicaMaterial);
