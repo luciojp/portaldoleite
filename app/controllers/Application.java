@@ -88,7 +88,16 @@ public class Application extends Controller {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		return ok(views.html.erro.render(disciplinas));
 	}
-	
+
+	private static void carregaInformacoesDicas(Tema tema,Dica dica){
+		String userName = session("username");
+		tema.addDica(dica);
+		dica.setTema(tema);
+		dica.setUser(userName);
+		dao.persist(dica);
+	}
+
+
 	@Transactional
 	@Security.Authenticated(Secured.class)
 	public static Result cadastrarDica(long idTema) {
@@ -110,40 +119,29 @@ public class Application extends Controller {
 				case "assunto":
 					String assunto = formMap.get("assunto");
 					DicaAssunto dicaAssunto = new DicaAssunto(assunto);
-					
-					tema.addDica(dicaAssunto);
-					dicaAssunto.setTema(tema);
-					dicaAssunto.setUser(userName);
-					dao.persist(dicaAssunto);				
+
+					carregaInformacoesDicas(tema,dicaAssunto);
+
 					break;
 				case "conselho":
 					String conselho = formMap.get("conselho");
 					DicaConselho dicaConselho = new DicaConselho(conselho);
-					
-					tema.addDica(dicaConselho);
-					dicaConselho.setTema(tema);
-					dicaConselho.setUser(userName);
-					dao.persist(dicaConselho);				
+					carregaInformacoesDicas(tema,dicaConselho);
+
 					break;
 				case "disciplina":
 					String disciplinas = formMap.get("disciplinas");
 					String razao = formMap.get("razao");
-					
 					DicaDisciplina dicaDisciplina = new DicaDisciplina(disciplinas, razao);
-					
-					tema.addDica(dicaDisciplina);
-					dicaDisciplina.setTema(tema);
-					dicaDisciplina.setUser(userName);
-					dao.persist(dicaDisciplina);
+
+					carregaInformacoesDicas(tema,dicaDisciplina);
+
 					break;
 				case "material":
+
 					String url = formMap.get("url");
 					DicaMaterial dicaMaterial = new DicaMaterial(url);
-									
-					tema.addDica(dicaMaterial);
-					dicaMaterial.setTema(tema);
-					dicaMaterial.setUser(userName);
-					dao.persist(dicaMaterial);				
+					carregaInformacoesDicas(tema,dicaMaterial);
 					break;
 				default:
 					break;

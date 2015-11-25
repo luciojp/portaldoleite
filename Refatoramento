@@ -1,0 +1,14 @@
+Na classe Global:
+
+Foi reduzido o tamanho do método "criaDicasDisciplinas()" criando
+outro método "carregaInformacoesDisciplinas()".
+
+Na classe Application:
+
+Foi reduzido o tamanho do método "cadastrarDicas()" criando
+outro método "carregaInformacoesDicas()".
+
+Na classe Tema:
+
+Para deixar o código mais legível  e intuitivo foram criados os métodos
+calculaMediana() e calculaMedia().
